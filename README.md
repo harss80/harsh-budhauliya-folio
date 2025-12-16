@@ -1,36 +1,143 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎬 Harsh Budhauliya | Professional Cinematic Portfolio
 
-## Getting Started
+> A Hollywood-inspired professional portfolio showcasing Harsh Budhauliya as a Full Stack Developer, Web Designer, and Founder of Taliyo Technologies.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
+![GSAP](https://img.shields.io/badge/GSAP-3.14-88CE02?style=flat-square&logo=greensock)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38B2AC?style=flat-square&logo=tailwind-css)
+
+## ✨ Features
+
+- **🎥 Cinematic Experience** - Hollywood-inspired design with film grain and letterbox effects
+- **📱 Multi-Page Architecture** - Separate pages for About, Projects, Services, and Contact
+- **⚡ Advanced Animations** - GSAP-powered scroll-triggered animations
+- **🎨 Professional Design** - Teal & orange color grading with clean, modern UI
+- **📧 Contact Form** - Functional contact form with validation
+- **🔍 SEO Optimized** - Comprehensive metadata and semantic HTML
+- **📱 Fully Responsive** - Optimized for all devices
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| **Next.js 16** | React framework with App Router |
+| **TypeScript** | Type-safe development |
+| **Tailwind CSS 4** | Utility-first styling |
+| **GSAP** | Professional animations |
+| **Lucide React** | Icon library |
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/harshbudhauliya/portfolio.git
+   cd portfolio
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open in browser**
+   ```
+   http://localhost:3000
+   ```
+
+### Build for Production
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📁 Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+├── public/
+│   ├── poster-ecommerce.png
+│   ├── poster-social.png
+│   └── poster-dashboard.png
+├── src/
+│   ├── app/
+│   │   ├── about/
+│   │   │   └── page.tsx          # About page
+│   │   ├── projects/
+│   │   │   └── page.tsx          # Projects page
+│   │   ├── services/
+│   │   │   └── page.tsx          # Services page
+│   │   ├── contact/
+│   │   │   └── page.tsx          # Contact page
+│   │   ├── globals.css           # Global styles
+│   │   ├── layout.tsx            # Root layout
+│   │   └── page.tsx              # Home page
+│   └── components/
+│       └── (legacy components)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎨 Color Palette
 
-## Learn More
+| Color | Hex | Usage |
+|-------|-----|-------|
+| Cinema BG | `#0a0e12` | Background |
+| Cinema Teal | `#14b8a6` | Primary accent |
+| Cinema Orange | `#fb923c` | Secondary accent |
+| Cinema Gray | `#1f2937` | Cards & containers |
 
-To learn more about Next.js, take a look at the following resources:
+## 🎬 Pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Home** - Cinematic intro with navigation to all sections
+2. **About** - The origin story and journey
+3. **Projects** - Portfolio of featured work
+4. **Services** - Detailed service offerings
+5. **Contact** - Contact form and information
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📱 Responsive Design
 
-## Deploy on Vercel
+- Desktop: Full cinematic experience with advanced animations
+- Tablet: Optimized layout with touch-friendly navigation
+- Mobile: Streamlined experience with adjusted letterbox
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔧 Customization
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Update Personal Info
+
+**Home Page** (`src/app/page.tsx`):
+- Update name and role
+
+**About Page** (`src/app/about/page.tsx`):
+- Edit story content
+
+**Contact Page** (`src/app/contact/page.tsx`):
+- Update email, phone, and social links
+
+**Projects Page** (`src/app/projects/page.tsx`):
+- Add/edit projects in the `projects` array
+
+**Services Page** (`src/app/services/page.tsx`):
+- Modify services in the `services` array
+
+### Change Colors
+
+Edit `src/app/globals.css` under `:root` and `@theme` sections.
+
+## 📄 License
+
+MIT License - Feel free to use for personal portfolios.
+
+---
+
+**Designed & Developed with 🎬 by Harsh Budhauliya**  
+**Taliyo Technologies**

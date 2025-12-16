@@ -1,26 +1,84 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050505;
+  --foreground: #e5e5e5;
+
+  /* Classic Hollywood Palette (No Glow / Flat / Professional) */
+  --cinema-bg: #050505;
+  --cinema-gold: #c5a059;
+  --cinema-silver: #a0a0a0;
+  --cinema-white: #ffffff;
+  --cinema-gray: #333333;
+  --cinema-red: #8a1c1c;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-cinema-bg: var(--cinema-bg);
+  --color-cinema-gold: var(--cinema-gold);
+  --color-cinema-silver: var(--cinema-silver);
+  --color-cinema-white: var(--cinema-white);
+  --color-cinema-gray: var(--cinema-gray);
+  --color-cinema-red: var(--cinema-red);
+
+  --font-heading: "Oswald", sans-serif;
+  --font-body: "Outfit", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--cinema-bg);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* Subtle Film Grain (Texture) */
+.cinema-grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Sticker Utility Class */
+.sticker {
+  position: absolute;
+  background: white;
+  color: black;
+  padding: 0.5rem 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-family: var(--font-heading);
+  border: 1px solid #ccc;
+  transform: rotate(-3deg);
+  z-index: 20;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+  transition: transform 0.3s ease;
+}
+
+.sticker:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cinema-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cinema-gray);
 }
