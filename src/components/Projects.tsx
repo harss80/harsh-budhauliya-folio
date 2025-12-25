@@ -9,6 +9,15 @@ gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
     {
+        id: 4,
+        title: "BUDA'S PUB",
+        genre: "Hospitality / Dining",
+        role: "Lead Developer",
+        image: "/poster-restaurant.png",
+        description: "A premium restaurant interface featuring a dynamic menu, event tracking, and immersive visual storytelling.",
+        year: "2025",
+    },
+    {
         id: 1,
         title: "E-COMMERCE EMPIRE",
         genre: "Action / Commerce",

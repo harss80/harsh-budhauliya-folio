@@ -87,27 +87,32 @@ const SpotlightProject = () => {
                 <div className="spotlight-content space-y-8 order-2 lg:order-1">
                     <div className="flex items-center gap-4 text-cinema-gold font-mono text-xs uppercase tracking-widest">
                         <span className="px-2 py-1 border border-cinema-gold">Latest Release</span>
-                        <span>2024</span>
+                        <span>2025</span>
                     </div>
                     <h2 className="font-heading text-5xl md:text-7xl uppercase text-white leading-none">
-                        E-Commerce<br />Empire
+                        Buda's<br />Pub
                     </h2>
                     <p className="text-gray-400 text-lg leading-relaxed font-body">
-                        A revolutionary shopping platform integrated with AI-driven recommendations.
-                        Features include real-time inventory tracking, 3D product previews, and a
-                        seamless checkout experience reducing friction by 40%.
+                        A vibrant neighborhood bar and grill website featuring a dynamic menu of over 80 dishes
+                        and real-time live music event scheduling. Designed for immersive visual storytelling
+                        and seamless user interaction.
                     </p>
 
                     <div className="flex flex-wrap gap-3">
-                        {["Next.js", "WebGL", "Stripe", "Redis"].map((tag, i) => (
+                        {["Next.js", "TailwindCSS", "Framer Motion", "Vercel"].map((tag, i) => (
                             <span key={i} className="px-3 py-1 bg-white/5 text-gray-300 text-xs font-mono uppercase">{tag}</span>
                         ))}
                     </div>
 
                     <div className="flex gap-6 pt-4">
-                        <button className="flex items-center gap-2 text-white border-b border-white pb-1 hover:text-cinema-gold hover:border-cinema-gold transition-all">
+                        <a
+                            href="https://harsh-budhauliya-restaurant.vercel.app"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-white border-b border-white pb-1 hover:text-cinema-gold hover:border-cinema-gold transition-all"
+                        >
                             <Monitor size={18} /> Live Demo
-                        </button>
+                        </a>
                         <button className="flex items-center gap-2 text-gray-400 border-b border-gray-600 pb-1 hover:text-white hover:border-white transition-all">
                             <Github size={18} /> Source Code
                         </button>
@@ -117,10 +122,14 @@ const SpotlightProject = () => {
                 <div className="spotlight-image relative aspect-square lg:aspect-[4/3] order-1 lg:order-2">
                     <div className="absolute inset-0 bg-cinema-gold/10 -rotate-6 z-0 rounded-lg"></div>
                     <div className="absolute inset-0 bg-zinc-800 border border-zinc-700 overflow-hidden rounded-lg z-10 hover:scale-105 transition-transform duration-700">
-                        {/* Placeholder for project image */}
-                        <div className="w-full h-full bg-gradient-to-br from-zinc-800 to-black flex items-center justify-center text-zinc-700">
-                            <Box size={64} />
-                        </div>
+                        {/* Project Image */}
+                        <Image
+                            src="/poster-restaurant.png"
+                            alt="Buda's Pub"
+                            fill
+                            className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
                     </div>
                 </div>
             </div>
