@@ -83,8 +83,8 @@ const SectionHero = () => {
 
 // 2. VISION: Sticky Text Reveal
 const SectionVision = () => {
-    const container = useRef(null);
-    const textRef = useRef(null);
+    const container = useRef<HTMLElement>(null);
+    const textRef = useRef<HTMLParagraphElement>(null);
 
     useLayoutEffect(() => {
         if (!container.current || !textRef.current) return;
@@ -129,7 +129,7 @@ const SectionVision = () => {
 
 // 3. SHOWCASE CLUSTER: Featured Project (Buda's Pub)
 const SectionSpotlight = () => {
-    const containerRef = useRef(null);
+    const containerRef = useRef<HTMLElement>(null);
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -183,7 +183,7 @@ const SectionSpotlight = () => {
 
 // 4. HORIZONTAL SCROLL: Selected Works
 const SectionHorizontal = () => {
-    const sectionRef = useRef(null);
+    const sectionRef = useRef<HTMLElement>(null);
     const triggerRef = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(() => {
