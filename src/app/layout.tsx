@@ -3,6 +3,7 @@ import { Oswald, Outfit } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import CustomCursor from "@/components/CustomCursor";
 import SmoothScroll from "@/components/SmoothScroll";
+import { Providers } from "./providers";
 import "./globals.css";
 
 const oswald = Oswald({
@@ -49,18 +50,20 @@ export default function RootLayout({
       <body
         className={`${oswald.variable} ${outfit.variable} antialiased bg-cinema-bg text-white overflow-x-hidden cinema-mode`}
       >
-        <SmoothScroll>
-          <CustomCursor />
-          <Navbar />
-          {children}
+        <Providers>
+          <SmoothScroll>
+            <CustomCursor />
+            <Navbar />
+            {children}
 
-          {/* Film Grain Overlay - Placed after content to overlay it */}
-          <div className="cinema-grain pointer-events-none" />
+            {/* Film Grain Overlay - Placed after content to overlay it */}
+            <div className="cinema-grain pointer-events-none" />
 
-          {/* Letterbox Bars */}
-          <div className="letterbox-bar letterbox-top pointer-events-none" />
-          <div className="letterbox-bar letterbox-bottom pointer-events-none" />
-        </SmoothScroll>
+            {/* Letterbox Bars */}
+            <div className="letterbox-bar letterbox-top pointer-events-none" />
+            <div className="letterbox-bar letterbox-bottom pointer-events-none" />
+          </SmoothScroll>
+        </Providers>
       </body>
     </html>
   );

@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CinematicIntro from "@/components/CinematicIntro";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -11,20 +10,31 @@ import StatsSection from "@/components/StatsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import Services from "@/components/Services";
 import Contact from "@/components/Contact";
+import { useIntro } from "@/context/IntroContext";
 
 export default function HomePage() {
-  const [introComplete, setIntroComplete] = useState(false);
+  const { hasPlayed, setHasPlayed } = useIntro();
+  const [showContent, setShowContent] = useState(hasPlayed);
+
+  useEffect(() => {
+    if (hasPlayed) {
+      setShowContent(true);
+    }
+  }, [hasPlayed]);
 
   return (
     <main className="relative bg-cinema-bg min-h-screen text-white overflow-hidden selection:bg-cinema-gold selection:text-black">
 
       {/* Cinematic Intro Sequence */}
-      {!introComplete && (
-        <CinematicIntro onComplete={() => setIntroComplete(true)} />
+      {!hasPlayed && (
+        <CinematicIntro onComplete={() => {
+          setHasPlayed(true);
+          setShowContent(true);
+        }} />
       )}
 
       {/* Main Movie Content */}
-      <div className={`transition-opacity duration-1000 ${introComplete ? "opacity-100" : "opacity-0 h-0 overflow-hidden"}`}>
+      <div className={`transition-opacity duration-1000 ${showContent ? "opacity-100" : "opacity-0 h-0 overflow-hidden"}`}>
 
         {/* Scene 1: The Opening (Hero) */}
         <div id="home">
