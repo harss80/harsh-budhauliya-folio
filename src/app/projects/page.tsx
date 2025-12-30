@@ -368,16 +368,16 @@ const SectionProcess = () => {
     ];
 
     return (
-        <section className="py-32 px-6 md:px-24 bg-zinc-950 relative">
+        <section className="py-16 md:py-32 px-6 md:px-24 bg-zinc-950 relative">
             <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-zinc-900/20 to-transparent pointer-events-none" />
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
-                <div className="sticky top-32 h-fit">
-                    <span className="font-mono text-cinema-gold mb-4 block tracking-widest uppercase">The Workflow</span>
-                    <h2 className="font-heading text-5xl md:text-6xl text-white uppercase mb-8 leading-tight">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 relative z-10">
+                <div className="lg:sticky lg:top-32 h-fit">
+                    <span className="font-mono text-cinema-gold mb-2 md:mb-4 block tracking-widest uppercase text-sm md:text-base">The Workflow</span>
+                    <h2 className="font-heading text-4xl md:text-6xl text-white uppercase mb-4 md:mb-8 leading-tight">
                         From Concept <br /> To <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-600">Reality</span>
                     </h2>
-                    <p className="text-zinc-400 max-w-md font-body text-lg">
+                    <p className="text-zinc-400 max-w-md font-body text-base md:text-lg leading-relaxed">
                         Our process is a refined loop of feedback and iteration. We value transparency and speed without compromising on quality.
                     </p>
                 </div>
@@ -387,14 +387,14 @@ const SectionProcess = () => {
                         <div
                             key={i}
                             onClick={() => setActive(i)}
-                            className={`border-b border-zinc-800 pb-8 cursor-pointer group transition-all duration-300 ${active === i ? "opacity-100" : "opacity-40 hover:opacity-70"}`}
+                            className={`border-b border-zinc-800 pb-6 md:pb-8 cursor-pointer group transition-all duration-300 ${active === i ? "opacity-100" : "opacity-40 hover:opacity-70"}`}
                         >
-                            <div className="flex items-center justify-between mb-4">
-                                <span className="font-mono text-cinema-gold text-lg">0{i + 1}</span>
-                                <h3 className="font-heading text-3xl md:text-4xl text-white uppercase group-hover:pl-4 transition-all">{step.title}</h3>
+                            <div className="flex items-center justify-between mb-2 md:mb-4">
+                                <span className="font-mono text-cinema-gold text-base md:text-lg">0{i + 1}</span>
+                                <h3 className="font-heading text-2xl md:text-4xl text-white uppercase group-hover:pl-2 md:group-hover:pl-4 transition-all">{step.title}</h3>
                             </div>
-                            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${active === i ? "max-h-40 opacity-100" : "max-h-0 opacity-0"}`}>
-                                <p className="text-zinc-400 pl-8 md:pl-10 leading-relaxed max-w-lg">{step.desc}</p>
+                            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${active === i ? "max-h-48 md:max-h-40 opacity-100" : "max-h-0 opacity-0"}`}>
+                                <p className="text-zinc-400 pl-6 md:pl-10 text-sm md:text-base leading-relaxed max-w-lg">{step.desc}</p>
                             </div>
                         </div>
                     ))}
