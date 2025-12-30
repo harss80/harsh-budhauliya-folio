@@ -181,7 +181,7 @@ const SectionSpotlight = () => {
     );
 };
 
-// 4. HORIZONTAL SCROLL: Selected Works
+// 4. HORIZONTAL SCROLL: Selected Works (Responsive: Vertical Stack on Mobile)
 const SectionHorizontal = () => {
     const sectionRef = useRef<HTMLElement>(null);
     const triggerRef = useRef<HTMLDivElement>(null);
@@ -189,20 +189,31 @@ const SectionHorizontal = () => {
     useLayoutEffect(() => {
         if (!sectionRef.current || !triggerRef.current) return;
 
-        const ctx = gsap.context(() => {
+        let ctx = gsap.context(() => {
             const cards = gsap.utils.toArray(".work-card");
 
-            gsap.to(cards, {
-                xPercent: -100 * (cards.length - 1),
-                ease: "none",
-                scrollTrigger: {
-                    trigger: triggerRef.current,
-                    pin: true,
-                    scrub: 1,
-                    snap: 1 / (cards.length - 1),
-                    end: () => "+=" + (triggerRef.current?.offsetWidth || 0),
+            ScrollTrigger.matchMedia({
+                // Desktop: Horizontal Scroll
+                "(min-width: 768px)": function () {
+                    gsap.to(cards, {
+                        xPercent: -100 * (cards.length - 1),
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: triggerRef.current,
+                            pin: true,
+                            scrub: 1,
+                            snap: 1 / (cards.length - 1),
+                            end: () => "+=" + (triggerRef.current?.offsetWidth || 0),
+                        }
+                    });
+                },
+                // Mobile: No GSAP Pinning (Native Vertical Scroll)
+                "(max-width: 767px)": function () {
+                    // Reset any potential transforms
+                    gsap.set(cards, { clearProps: "all" });
                 }
             });
+
         }, sectionRef);
         return () => ctx.revert();
     }, []);
@@ -216,35 +227,56 @@ const SectionHorizontal = () => {
 
     return (
         <section ref={sectionRef} className="bg-zinc-950 overflow-hidden">
-            <div ref={triggerRef} className="h-screen w-full flex items-center relative overflow-hidden pl-12 md:pl-24">
-                <div className="absolute top-12 left-12 md:left-24 z-10 pointer-events-none">
-                    <h3 className="font-heading text-xl md:text-3xl text-white uppercase opacity-70">Selected Works</h3>
+            {/* Desktop Layout Structure */}
+            <div ref={triggerRef} className="hidden md:flex h-screen w-full items-center relative overflow-hidden pl-24">
+                <div className="absolute top-12 left-24 z-10 pointer-events-none">
+                    <h3 className="font-heading text-3xl text-white uppercase opacity-70">Selected Works</h3>
                     <span className="text-zinc-500 font-mono text-xs">SCROLL HORIZONTALLY</span>
                 </div>
 
-                <div className="flex gap-8 md:gap-12 pr-24 items-center">
+                <div className="flex gap-12 pr-24 items-center">
                     <div className="work-card min-w-[20vw] h-[50vh] flex items-center justify-center opacity-30">
                         <h2 className="font-heading text-6xl text-white uppercase transform -rotate-90 whitespace-nowrap">Drag &rarr;</h2>
                     </div>
                     {works.map((work) => (
-                        <div key={work.id} className="work-card relative min-w-[80vw] md:min-w-[40vw] h-[60vh] md:h-[70vh] bg-zinc-900 group border border-zinc-800 flex-shrink-0 overflow-hidden">
+                        <div key={work.id} className="work-card relative min-w-[40vw] h-[70vh] bg-zinc-900 group border border-zinc-800 flex-shrink-0 overflow-hidden">
                             <img src={work.img} alt={work.title} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" />
                             <div className="absolute top-6 left-6 z-20">
                                 <span className="font-mono text-cinema-gold text-xl p-2 bg-black/50 backdrop-blur">{work.id}</span>
                             </div>
                             <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent translate-y-2 group-hover:translate-y-0 transition-transform">
-                                <h3 className="text-3xl md:text-5xl font-heading text-white uppercase mb-2">{work.title}</h3>
-                                <span className="font-mono text-xs md:text-sm text-zinc-400 uppercase tracking-widest border border-zinc-700 px-3 py-1 rounded-full">{work.type}</span>
+                                <h3 className="text-5xl font-heading text-white uppercase mb-2">{work.title}</h3>
+                                <span className="font-mono text-sm text-zinc-400 uppercase tracking-widest border border-zinc-700 px-3 py-1 rounded-full">{work.type}</span>
                             </div>
                         </div>
                     ))}
-                    <div className="work-card min-w-[80vw] md:min-w-[40vw] h-[60vh] md:h-[70vh] bg-zinc-900 border border-zinc-800 flex items-center justify-center flex-shrink-0">
+                    <div className="work-card min-w-[40vw] h-[70vh] bg-zinc-900 border border-zinc-800 flex items-center justify-center flex-shrink-0">
                         <div className="text-center">
-                            <h2 className="font-heading text-4xl md:text-6xl text-zinc-700 uppercase mb-4">Coming Soon</h2>
+                            <h2 className="font-heading text-6xl text-zinc-700 uppercase mb-4">Coming Soon</h2>
                             <p className="font-mono text-zinc-500">More projects in the pipeline</p>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            {/* Mobile Layout Structure (Vertical Stack) */}
+            <div className="md:hidden py-24 px-6 flex flex-col gap-12">
+                <div className="mb-8">
+                    <h3 className="font-heading text-4xl text-white uppercase opacity-90">Selected Works</h3>
+                    <span className="text-zinc-500 font-mono text-xs">FEATURED PROJECTS</span>
+                </div>
+                {works.map((work) => (
+                    <div key={work.id} className="relative w-full aspect-[4/5] bg-zinc-900 border border-zinc-800 overflow-hidden group">
+                        <img src={work.img} alt={work.title} className="w-full h-full object-cover opacity-80" />
+                        <div className="absolute top-4 left-4 z-20">
+                            <span className="font-mono text-cinema-gold text-lg p-1 bg-black/50 backdrop-blur">{work.id}</span>
+                        </div>
+                        <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black to-transparent">
+                            <h3 className="text-4xl font-heading text-white uppercase mb-2">{work.title}</h3>
+                            <span className="font-mono text-xs text-zinc-400 uppercase tracking-widest border border-zinc-700 px-3 py-1 rounded-full">{work.type}</span>
+                        </div>
+                    </div>
+                ))}
             </div>
         </section>
     );
