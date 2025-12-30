@@ -89,8 +89,11 @@ const SectionVision = () => {
     useLayoutEffect(() => {
         if (!container.current || !textRef.current) return;
 
+        const textEl = textRef.current;
+        const containerEl = container.current;
+
         let ctx = gsap.context(() => {
-            const words = textRef.current.querySelectorAll(".word");
+            const words = textEl.querySelectorAll(".word");
             gsap.fromTo(words,
                 { opacity: 0.1, y: 20 },
                 {
@@ -98,7 +101,7 @@ const SectionVision = () => {
                     y: 0,
                     stagger: 0.1,
                     scrollTrigger: {
-                        trigger: container.current,
+                        trigger: containerEl,
                         start: "top 60%",
                         end: "bottom 80%",
                         scrub: 1,
