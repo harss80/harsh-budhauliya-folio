@@ -6,50 +6,32 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const skills = [
-    {
-        category: "Frontend Magic",
-        items: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
-        icon: "🎬"
-    },
-    {
-        category: "Backend Power",
-        items: ["Node.js", "Express", "MongoDB", "REST APIs"],
-        icon: "⚡"
-    },
-    {
-        category: "Design Artistry",
-        items: ["UI/UX", "Figma", "GSAP", "Framer Motion"],
-        icon: "🎨"
-    },
-    {
-        category: "Performance",
-        items: ["SEO", "Core Web Vitals", "Optimization", "Analytics"],
-        icon: "🚀"
-    },
+const primarySkills = [
+    "React", "Next.js", "TypeScript", "GSAP", "TailwindCSS", "Node.js"
+];
+
+const secondarySkills = [
+    "PostgreSQL", "MongoDB", "Three.js", "Figma", "Framer Motion", "Express", "Docker", "GraphQL", "WebRTC"
 ];
 
 export default function Skills() {
-    const container = useRef(null);
+    const container = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            // Cards fade up simply
-            gsap.set(".skill-category", { opacity: 0, y: 30 }); // Initial State
+            // Removed .skill-border animation as the element does not exist
 
-            ScrollTrigger.batch(".skill-category", {
-                start: "top 85%",
-                onEnter: (batch) => {
-                    gsap.to(batch, {
-                        opacity: 1,
-                        y: 0,
-                        stagger: 0.1,
-                        duration: 0.8,
-                        ease: "power2.out",
-                        overwrite: true
-                    });
+            gsap.from(".skill-text", {
+                scrollTrigger: {
+                    trigger: container.current,
+                    start: "top 75%",
                 },
-                once: true
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.1,
+                ease: "power3.out",
+                delay: 0.5
             });
         }, container);
         return () => ctx.revert();
@@ -58,68 +40,66 @@ export default function Skills() {
     return (
         <section
             ref={container}
-            className="py-24 px-4 relative overflow-hidden bg-cinema-bg"
+            className="py-32 lg:py-48 relative w-full border-t border-border-light bg-bg-primary overflow-hidden"
         >
-            {/* Background Texture */}
-            <div className="absolute inset-0 cinema-grain" />
-
-            <div className="max-w-6xl mx-auto relative z-10">
-                {/* Section Title */}
-                <div className="text-center mb-16">
-                    <span className="text-cinema-gold font-heading tracking-[0.5em] text-sm uppercase">
-                        ★ Scene 3 ★
+            <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-24">
+                <div className="flex flex-col mb-16">
+                    <span className="text-text-secondary font-bold tracking-widest text-xs uppercase mb-4 block">
+                        [05] Capabilities
                     </span>
-                    <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl mt-4 text-white uppercase tracking-wider">
-                        PRODUCTION GEAR
+                    <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-text-primary leading-[0.9]">
+                        Technical <br /> Arsenal.
                     </h2>
-                    <div className="w-24 h-[1px] mx-auto mt-6 bg-gradient-to-r from-transparent via-cinema-gold to-transparent" />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-                    {skills.map((group, idx) => (
-                        <div
-                            key={idx}
-                            className="skill-category p-8 bg-zinc-950 border border-zinc-800 relative group overflow-hidden"
+                {/* Primary Skills Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-border-light">
+                    {primarySkills.map((skill, idx) => (
+                        <div 
+                            key={idx} 
+                            className="group relative p-12 lg:p-16 border-b border-r border-border-light flex items-center justify-center overflow-hidden hover:bg-text-primary transition-colors duration-500 cursor-default"
                         >
-                            {/* Metal Corners */}
-                            <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-zinc-700" />
-                            <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-zinc-700" />
-                            <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-zinc-700" />
-                            <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-zinc-700" />
-
-                            {/* Background Number */}
-                            <span className="absolute -right-4 -bottom-8 text-9xl font-heading text-zinc-900 group-hover:text-zinc-800 transition-colors pointer-events-none select-none">
-                                0{idx + 1}
-                            </span>
-
-                            {/* Icon */}
-                            <div className="relative z-10 text-4xl mb-6 text-cinema-gray group-hover:text-cinema-gold transition-colors duration-500 transform group-hover:scale-110 origin-left">
-                                {group.icon}
-                            </div>
-
-                            {/* Category Title */}
-                            <h3 className="relative z-10 text-white font-heading text-xl mb-6 uppercase tracking-widest border-b border-zinc-800 pb-4 group-hover:border-cinema-gold/50 transition-colors">
-                                {group.category}
+                            <h3 className="skill-text text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter text-text-primary group-hover:text-bg-primary transition-colors duration-500 relative z-10">
+                                {skill}
                             </h3>
-
-                            {/* Skills List */}
-                            <ul className="relative z-10 space-y-3">
-                                {group.items.map((item, i) => (
-                                    <li
-                                        key={i}
-                                        className="skill-item flex items-center gap-3"
-                                    >
-                                        <span className="w-1 h-1 bg-cinema-gold/50 rounded-full" />
-                                        <span className="font-mono text-sm text-gray-500 group-hover:text-white transition-colors duration-300 uppercase tracking-wider">
-                                            {item}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
                         </div>
                     ))}
                 </div>
             </div>
+
+            {/* Continuous Marquee for Secondary Skills */}
+            <div className="mt-32 border-y border-border-light py-8 bg-bg-secondary overflow-hidden flex whitespace-nowrap">
+                <div className="animate-marquee inline-flex items-center gap-12 px-6">
+                    {secondarySkills.map((skill, i) => (
+                        <div key={`marquee1-${i}`} className="flex items-center gap-12">
+                            <span className="text-2xl font-bold uppercase tracking-widest text-text-secondary">
+                                {skill}
+                            </span>
+                            <span className="w-2 h-2 bg-text-secondary rounded-full"></span>
+                        </div>
+                    ))}
+                    {secondarySkills.map((skill, i) => (
+                        <div key={`marquee2-${i}`} className="flex items-center gap-12">
+                            <span className="text-2xl font-bold uppercase tracking-widest text-text-secondary">
+                                {skill}
+                            </span>
+                            <span className="w-2 h-2 bg-text-secondary rounded-full"></span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            
+            {/* Infinite Marquee CSS directly injected for simplicity */}
+            <style dangerouslySetInnerHTML={{__html: `
+                @keyframes marquee {
+                    0% { transform: translateX(0%); }
+                    100% { transform: translateX(-50%); }
+                }
+                .animate-marquee {
+                    animation: marquee 20s linear infinite;
+                    width: max-content;
+                }
+            `}} />
         </section>
     );
 }

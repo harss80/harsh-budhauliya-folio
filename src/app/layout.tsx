@@ -18,14 +18,14 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Harsh Budhauliya | Full Stack Developer & Founder",
+  title: "Harsh Budhauliya | Software Engineer",
   description:
-    "Professional portfolio of Harsh Budhauliya - Full Stack Developer, Web Designer, and Founder of Taliyo Technologies. Specializing in MERN stack, UI/UX, and digital marketing.",
+    "Professional portfolio of Harsh Budhauliya - Software Engineer specializing in scalable web applications, MERN stack, and premium UI/UX design.",
   keywords: [
     "Harsh Budhauliya",
-    "Full Stack Developer",
-    "Taliyo Technologies",
-    "MERN Stack",
+    "Software Engineer",
+    "Frontend Developer",
+    "Backend Developer",
     "Web Designer",
     "Digital Marketing",
     "UI/UX Design",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Harsh Budhauliya" }],
   openGraph: {
-    title: "Harsh Budhauliya | Full Stack Developer & Founder",
+    title: "Harsh Budhauliya | Software Engineer",
     description:
       "Professional portfolio showcasing high-performance web development and design work.",
     type: "website",
@@ -48,20 +48,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${oswald.variable} ${outfit.variable} antialiased bg-cinema-bg text-white overflow-x-hidden cinema-mode`}
+        className={`${oswald.variable} ${outfit.variable} antialiased bg-bg-primary text-text-primary overflow-x-hidden`}
       >
         <Providers>
           <SmoothScroll>
             <CustomCursor />
             <Navbar />
             {children}
-
-            {/* Film Grain Overlay - Placed after content to overlay it */}
-            <div className="cinema-grain pointer-events-none" />
-
-            {/* Letterbox Bars */}
-            <div className="letterbox-bar letterbox-top pointer-events-none" />
-            <div className="letterbox-bar letterbox-bottom pointer-events-none" />
           </SmoothScroll>
         </Providers>
       </body>

@@ -1,128 +1,99 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
-import { ArrowLeft, Code, Cpu, Globe, Zap, Coffee, Heart, Music, Gamepad, Award } from "lucide-react";
+import { Code, Database, Server, GitBranch, Layers, Activity, BookOpen, Terminal, Code2 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// --- SECTIONS ---
-
-// 1. INTRO HERO
-const IntroHero = () => {
+// 1. HERO
+const HeroEntrance = () => {
     return (
-        <section className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden px-4">
-            <div className="absolute inset-0 z-0 opacity-20">
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cinema-gold blur-[150px] rounded-full mix-blend-screen animate-pulse" />
-                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cinema-red blur-[150px] rounded-full mix-blend-screen animate-pulse" style={{ animationDelay: "2s" }} />
-            </div>
-
-            <div className="relative z-10 text-center">
-                <p className="font-mono text-cinema-gold opacity-0 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-                    SCENE 1: THE AUTEUR
-                </p>
-                <h1 className="font-heading text-6xl md:text-9xl font-bold uppercase tracking-tighter my-6 opacity-0 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-                    THE MAN BEHIND<br /><span className="text-cinema-outline text-transparent stroke-white">THE MACHINE</span>
+        <section className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden px-4 lg:px-24 bg-bg-primary">
+            <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col justify-center items-start mt-20">
+                <div className="overflow-hidden mb-6">
+                    <p className="font-mono text-text-secondary tracking-[0.5em] uppercase text-sm animate-slide-up opacity-0" style={{ animationFillMode: "forwards" }}>
+                        Software Engineer
+                    </p>
+                </div>
+                
+                <h1 className="font-heading text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter text-text-primary leading-[0.85] mb-12">
+                    <div className="overflow-hidden">
+                        <span className="block animate-slide-up opacity-0" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>The</span>
+                    </div>
+                    <div className="overflow-hidden">
+                        <span className="block text-text-secondary animate-slide-up opacity-0" style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}>Architect.</span>
+                    </div>
                 </h1>
-                <p className="font-body text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto opacity-0 animate-fade-in-up" style={{ animationDelay: "0.6s" }}>
-                    "I don't just write code. I engineer digital emotions and craft cinematic web experiences."
-                </p>
+                
+                <div className="overflow-hidden max-w-3xl">
+                    <p className="font-body text-xl md:text-3xl text-text-secondary font-light leading-relaxed animate-slide-up opacity-0" style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}>
+                        I don't just write code. I engineer scalable systems, craft flawless user experiences, and push the boundaries of what's possible on the web.
+                    </p>
+                </div>
             </div>
 
             <style jsx>{`
-                .text-cinema-outline {
-                    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.8);
-                }
-                @keyframes fadeInUp {
-                    from { opacity: 0; transform: translateY(20px); }
+                @keyframes slideUp {
+                    from { opacity: 0; transform: translateY(100%); }
                     to { opacity: 1; transform: translateY(0); }
                 }
-                .animate-fade-in-up {
-                    animation: fadeInUp 1s ease-out forwards;
+                .animate-slide-up {
+                    animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
                 }
             `}</style>
         </section>
     );
 };
 
-// 2. MANIFESTO (Horizontal Scroll)
-const Manifesto = () => {
+// 2. CORE PHILOSOPHY
+const CorePhilosophy = () => {
     const sectionRef = useRef<HTMLDivElement>(null);
-    const triggerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            const sections = gsap.utils.toArray(".manifesto-item");
-            gsap.to(sections, {
-                xPercent: -100 * (sections.length - 1),
-                ease: "none",
-                scrollTrigger: {
-                    trigger: triggerRef.current,
-                    pin: true,
-                    scrub: 1,
-                    snap: 1 / (sections.length - 1),
-                    end: "+=3000",
-                },
-            });
+            gsap.fromTo(".philosophy-card", 
+                { y: 50, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    scrollTrigger: {
+                        trigger: sectionRef.current,
+                        start: "top 70%",
+                    }
+                }
+            );
         }, sectionRef);
         return () => ctx.revert();
     }, []);
 
-    const principles = [
-        { title: "OBSESSION", desc: "Good enough is not enough. We strive for pixel-perfect precision." },
-        { title: "PERFORMANCE", desc: "Speed is a feature. Animation should never cost usability." },
-        { title: "STORYTELLING", desc: "Every scroll is a scene. Every click is a beat. The web is a narrative." },
-        { title: "INNOVATION", desc: "Breaking the Fourth Wall. Pushing browser capabilities to the edge." },
+    const philosophies = [
+        { title: "Scalability First", desc: "Building architecture that grows. Anticipating traffic spikes and data complexity before they happen." },
+        { title: "Performance is UX", desc: "A slow app is a broken app. Relentlessly optimizing web vitals, rendering paths, and server response times." },
+        { title: "Clean Code", desc: "Writing code for humans first, machines second. Emphasizing readability, strict typing, and modularity." },
+        { title: "Pixel Perfection", desc: "Bridging the gap between engineering and design. Ensuring every component looks exactly as intended." },
     ];
 
     return (
-        <section ref={sectionRef} className="overflow-hidden bg-white text-black">
-            <div ref={triggerRef} className="h-screen flex items-center w-[400vw]">
-                {principles.map((p, i) => (
-                    <div key={i} className="manifesto-item w-screen h-screen flex flex-col justify-center items-center p-8 border-r border-black/10 relative">
-                        <span className="absolute top-10 left-10 font-mono text-xl opacity-50">0{i + 1} // PRINCIPLE</span>
-                        <h2 className="font-heading text-[10vw] leading-none font-bold uppercase mb-8">{p.title}</h2>
-                        <p className="font-body text-2xl md:text-4xl max-w-4xl text-center leading-relaxed font-light">{p.desc}</p>
-                    </div>
-                ))}
-            </div>
-        </section>
-    );
-};
-
-// 3. THE ARSENAL (Tech Stack)
-const TheArsenal = () => {
-    const tools = [
-        { icon: <Code size={40} />, label: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind"] },
-        { icon: <Zap size={40} />, label: "Animation", items: ["GSAP", "Three.js", "Framer Motion", "WebGL"] },
-        { icon: <Globe size={40} />, label: "Backend", items: ["Node.js", "PostgreSQL", "GraphQL", "AWS"] },
-        { icon: <Cpu size={40} />, label: "Architecture", items: ["Docker", "CI/CD", "Microservices", "System Design"] },
-    ];
-
-    return (
-        <section className="py-32 px-4 bg-zinc-950 border-y border-zinc-800 relative">
-            <div className="max-w-7xl mx-auto">
-                <div className="mb-20 text-center">
-                    <span className="text-cinema-gold font-mono tracking-widest text-sm uppercase">The Toolkit</span>
-                    <h2 className="text-white font-heading text-5xl md:text-7xl mt-4 uppercase">Production Arsenal</h2>
+        <section ref={sectionRef} className="py-24 md:py-32 lg:py-48 px-4 lg:px-24 bg-bg-primary relative border-t border-border-light">
+            <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+                <div className="col-span-1 lg:col-span-4 flex flex-col justify-start">
+                    <span className="font-mono text-xs tracking-widest uppercase text-text-secondary mb-8 block">
+                        [01] Values
+                    </span>
+                    <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-text-primary leading-[0.9] sticky top-32">
+                        Core <br /> Philosophy.
+                    </h2>
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {tools.map((tool, i) => (
-                        <div key={i} className="group p-10 border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-900 hover:border-cinema-gold transition-all duration-500 rounded-sm relative overflow-hidden">
-                            <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 group-hover:text-cinema-gold transition-all duration-500">
-                                {tool.icon}
-                            </div>
-                            <h3 className="text-2xl font-heading text-white mb-6 uppercase tracking-wider">{tool.label}</h3>
-                            <div className="flex flex-wrap gap-3">
-                                {tool.items.map((item, j) => (
-                                    <span key={j} className="px-4 py-2 border border-zinc-700 text-gray-400 text-sm font-mono uppercase hover:bg-white hover:text-black transition-colors duration-300 cursor-default">
-                                        {item}
-                                    </span>
-                                ))}
-                            </div>
+                <div className="col-span-1 lg:col-span-8 flex flex-col gap-12">
+                    {philosophies.map((p, i) => (
+                        <div key={i} className="philosophy-card border-b border-border-light pb-12 last:border-0">
+                            <h3 className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-text-primary mb-4">{p.title}</h3>
+                            <p className="text-xl md:text-2xl text-text-secondary font-light leading-relaxed">{p.desc}</p>
                         </div>
                     ))}
                 </div>
@@ -131,128 +102,281 @@ const TheArsenal = () => {
     );
 };
 
-// 4. STATS (Counters)
-const BoxOfficeStats = () => {
+// 3. TECHNICAL ARSENAL (Bento Grid)
+const TechnicalArsenal = () => {
+    const sectionRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.fromTo(".bento-card", 
+                { y: 100, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    stagger: 0.1,
+                    ease: "power4.out",
+                    scrollTrigger: {
+                        trigger: sectionRef.current,
+                        start: "top 70%",
+                    }
+                }
+            );
+        }, sectionRef);
+        return () => ctx.revert();
+    }, []);
+
+    const stack = [
+        { title: "Frontend", icon: <Code size={32} />, skills: ["React", "Next.js", "TypeScript", "Tailwind"], colSpan: "md:col-span-2", rowSpan: "md:row-span-1" },
+        { title: "Backend", icon: <Server size={32} />, skills: ["Node.js", "Express", "NestJS"], colSpan: "md:col-span-1", rowSpan: "md:row-span-2" },
+        { title: "Database", icon: <Database size={32} />, skills: ["PostgreSQL", "MongoDB", "Redis"], colSpan: "md:col-span-1", rowSpan: "md:row-span-1" },
+        { title: "DevOps", icon: <GitBranch size={32} />, skills: ["Docker", "AWS", "CI/CD"], colSpan: "md:col-span-1", rowSpan: "md:row-span-1" },
+        { title: "Architecture", icon: <Layers size={32} />, skills: ["Microservices", "System Design", "GraphQL"], colSpan: "md:col-span-2", rowSpan: "md:row-span-1" },
+    ];
+
     return (
-        <section className="py-24 bg-cinema-gold text-black">
-            <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
-                {[
-                    { val: "5+", label: "Years Experience" },
-                    { val: "50+", label: "Projects Shipped" },
-                    { val: "100%", label: "Client Satisfaction" },
-                    { val: "∞", label: "Lines of Code" }
-                ].map((stat, i) => (
-                    <div key={i} className="flex flex-col items-center">
-                        <span className="font-heading text-6xl md:text-8xl font-bold mb-2">{stat.val}</span>
-                        <span className="font-mono text-sm tracking-[0.2em] uppercase border-t border-black pt-2 w-full max-w-[100px]">{stat.label}</span>
+        <section ref={sectionRef} className="py-24 md:py-32 lg:py-48 px-4 lg:px-24 bg-bg-secondary relative border-t border-border-light">
+            <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+                <div className="col-span-1 lg:col-span-4 flex flex-col justify-start">
+                    <span className="font-mono text-xs tracking-widest uppercase text-text-secondary mb-8 block">
+                        [02] Stack
+                    </span>
+                    <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-text-primary leading-[0.9] sticky top-32">
+                        The <br /> Arsenal.
+                    </h2>
+                </div>
+                <div className="col-span-1 lg:col-span-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
+                        {stack.map((item, i) => (
+                            <div key={i} className={`bento-card group p-8 border border-border-light bg-bg-primary hover:border-white/20 transition-all duration-500 flex flex-col justify-between overflow-hidden relative ${item.colSpan} ${item.rowSpan}`}>
+                                <div className="absolute -right-4 -top-4 text-white/5 group-hover:text-white/10 transition-colors duration-500 transform group-hover:scale-110 group-hover:-rotate-12">
+                                    {item.icon}
+                                </div>
+                                <div>
+                                    <div className="text-white/50 mb-6 group-hover:text-white transition-colors duration-300">
+                                        {item.icon}
+                                    </div>
+                                    <h3 className="text-2xl font-black text-white uppercase tracking-tighter mb-2">{item.title}</h3>
+                                </div>
+                                <div className="flex flex-wrap gap-2 relative z-10">
+                                    {item.skills.map((skill, j) => (
+                                        <span key={j} className="px-3 py-1 bg-bg-secondary border border-border-light text-text-secondary text-xs font-mono uppercase">
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                </div>
             </div>
         </section>
     );
-}
+};
 
-// 5. BEHIND THE SCENES (Interests)
-const BehindTheScenes = () => {
+// 4. CAREER JOURNEY
+const CareerJourney = () => {
+    const sectionRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.fromTo(".journey-card", 
+                { x: 50, opacity: 0 },
+                {
+                    x: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    scrollTrigger: {
+                        trigger: sectionRef.current,
+                        start: "top 70%",
+                    }
+                }
+            );
+        }, sectionRef);
+        return () => ctx.revert();
+    }, []);
+
+    const roles = [
+        { year: "2025 - Present", title: "Frontend Dev & Marketing", company: "Taliyo Technologies", desc: "Spearheaded the development of AI-powered web applications using React. Bridged the gap between technical execution and marketing strategies to drive product adoption." },
+        { year: "2024 - 2025", title: "Frontend Developer", company: "Examboost", desc: "Developed and maintained highly responsive user interfaces. Optimized web performance and collaborated with designers to deliver seamless student experiences." },
+        { year: "2023 - 2024", title: "Intern", company: "V5 IT Solution", desc: "Assisted in building full-stack web applications. Gained hands-on experience in modern frontend frameworks and agile development cycles." },
+    ];
+
+    return (
+        <section ref={sectionRef} className="py-24 md:py-32 lg:py-48 px-4 lg:px-24 bg-bg-primary relative border-t border-border-light">
+            <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+                <div className="col-span-1 lg:col-span-4 flex flex-col justify-start">
+                    <span className="font-mono text-xs tracking-widest uppercase text-text-secondary mb-8 block">
+                        [03] Timeline
+                    </span>
+                    <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-text-primary leading-[0.9] sticky top-32">
+                        Career <br /> Journey.
+                    </h2>
+                </div>
+                <div className="col-span-1 lg:col-span-8 flex flex-col gap-8">
+                    {roles.map((role, i) => (
+                        <div key={i} className="journey-card p-8 md:p-12 bg-bg-secondary border border-border-light group hover:border-white/20 transition-all duration-300">
+                            <span className="text-text-secondary font-mono text-sm uppercase block mb-4">{role.year}</span>
+                            <h3 className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white mb-2">{role.title}</h3>
+                            <h4 className="text-xl font-medium text-text-secondary mb-6">{role.company}</h4>
+                            <p className="text-lg text-text-secondary font-light leading-relaxed">{role.desc}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
+// 5. SCALE & IMPACT
+const ScaleAndImpact = () => {
+    const sectionRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.fromTo(".stat-num", 
+                { textContent: 0 },
+                {
+                    textContent: 1, // we'll use snap for textContent
+                    duration: 2,
+                    ease: "power2.out",
+                    snap: { textContent: 1 },
+                    stagger: 0.2,
+                    scrollTrigger: {
+                        trigger: sectionRef.current,
+                        start: "top 75%",
+                    }
+                }
+            );
+        }, sectionRef);
+        return () => ctx.revert();
+    }, []);
+
+    const stats = [
+        { num: 5, suffix: "+", label: "Years Exp." },
+        { num: 50, suffix: "+", label: "Projects" },
+        { num: 40, suffix: "%", label: "Perf. Boost" },
+        { num: 1, suffix: "M+", label: "Lines Coded" }
+    ];
+
+    return (
+        <section ref={sectionRef} className="py-24 md:py-32 lg:py-48 px-4 lg:px-24 bg-text-primary text-bg-primary border-t border-border-light relative overflow-hidden">
+            <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+                <div className="col-span-1 lg:col-span-4 flex flex-col justify-start">
+                    <span className="font-mono text-xs tracking-widest uppercase opacity-70 mb-8 block text-bg-primary font-bold">
+                        [04] Metrics
+                    </span>
+                    <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9] text-bg-primary">
+                        Scale & <br /> Impact.
+                    </h2>
+                </div>
+                <div className="col-span-1 lg:col-span-8 grid grid-cols-2 md:grid-cols-2 gap-8">
+                    {stats.map((stat, i) => (
+                        <div key={i} className="flex flex-col items-start justify-center p-8 border-l-4 border-bg-primary/20">
+                            <div className="flex items-baseline mb-2 text-bg-primary">
+                                <span className="stat-num font-heading text-6xl md:text-8xl font-black tracking-tighter">{stat.num}</span>
+                                <span className="font-heading text-4xl md:text-6xl font-bold">{stat.suffix}</span>
+                            </div>
+                            <span className="font-mono text-sm tracking-widest uppercase font-bold opacity-70">{stat.label}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
+// 6. BEYOND THE IDE
+const BeyondIDE = () => {
+    const sectionRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.fromTo(".interest-card", 
+                { y: 50, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    scrollTrigger: {
+                        trigger: sectionRef.current,
+                        start: "top 70%",
+                    }
+                }
+            );
+        }, sectionRef);
+        return () => ctx.revert();
+    }, []);
+
     const interests = [
-        { icon: <Music size={32} />, title: "Soundscapes", desc: "Producing lofi beats & ambient mixes." },
-        { icon: <Gamepad size={32} />, title: "Interactive Art", desc: "Gaming & exploring narrative design." },
-        { icon: <Coffee size={32} />, title: "Fuel", desc: "Connoisseur of dark roast coffee." },
-        { icon: <Heart size={32} />, title: "Community", desc: "Mentoring new developers." },
+        { icon: <BookOpen size={24} />, title: "Continuous Learning", desc: "Always exploring new patterns, languages, and architectures." },
+        { icon: <Terminal size={24} />, title: "Open Source", desc: "Contributing to tools that power the modern web ecosystem." },
+        { icon: <Code2 size={24} />, title: "Mentorship", desc: "Guiding junior developers to write cleaner, better code." },
+        { icon: <Activity size={24} />, title: "Optimization", desc: "Finding joy in shaving milliseconds off load times." },
     ];
 
     return (
-        <section className="py-32 px-4 bg-cinema-bg relative">
-            <div className="max-w-6xl mx-auto">
-                <div className="mb-20">
-                    <h2 className="text-white font-heading text-5xl md:text-7xl uppercase text-right">Off Camera</h2>
+        <section ref={sectionRef} className="py-24 md:py-32 lg:py-48 px-4 lg:px-24 bg-bg-primary border-t border-border-light relative">
+            <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+                <div className="col-span-1 lg:col-span-4 flex flex-col justify-start">
+                    <span className="font-mono text-xs tracking-widest uppercase text-text-secondary mb-8 block">
+                        [05] Off-Screen
+                    </span>
+                    <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-text-primary leading-[0.9] sticky top-32">
+                        Beyond <br /> The IDE.
+                    </h2>
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="col-span-1 lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {interests.map((item, i) => (
-                        <div key={i} className="aspect-square bg-zinc-900 border border-zinc-800 p-8 flex flex-col justify-between hover:scale-105 hover:bg-white hover:text-black transition-all duration-300 group cursor-pointer group">
-                            <div className="text-cinema-gold group-hover:text-black transition-colors">{item.icon}</div>
-                            <div>
-                                <h4 className="font-heading text-xl uppercase mb-2">{item.title}</h4>
-                                <p className="text-sm font-mono opacity-60 group-hover:opacity-100">{item.desc}</p>
+                        <div key={i} className="interest-card group p-8 bg-bg-secondary border border-border-light hover:border-white/20 transition-all duration-300 flex flex-col items-start">
+                            <div className="mb-6 text-text-secondary group-hover:text-white transition-colors duration-300">
+                                {item.icon}
                             </div>
+                            <h4 className="font-heading text-2xl font-black tracking-tighter uppercase mb-3 text-text-primary">{item.title}</h4>
+                            <p className="text-lg font-body text-text-secondary font-light leading-relaxed group-hover:text-white transition-colors duration-300">{item.desc}</p>
                         </div>
                     ))}
                 </div>
             </div>
         </section>
     );
-}
+};
 
-// 6. DIRECTOR'S COMMENTARY (FAQ/Accordion)
-const DirectorsCommentary = () => {
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-    const faqs = [
-        { q: "What is your main tech stack?", a: "I specialize in the MERN stack (MongoDB, Express, React, Node.js) but I'm heavily invested in the Next.js ecosystem for production-grade apps." },
-        { q: "Do you do freelance work?", a: "Yes, I am available for select freelance projects and long-term contracts. I prefer projects that value high-end UI/UX." },
-        { q: "How do you handle performance?", a: "I build with performance in mind from day one. Server-side rendering, code splitting, image optimization, and efficient asset delivery are standard." },
-        { q: "Can you design as well as code?", a: "Absolutely. I believe the best developers have a strong grasp of design principles. I use Figma for prototyping and design systems." },
-    ];
-
+// 7. THE NEXT CHAPTER (CTA)
+const NextChapterCTA = () => {
     return (
-        <section className="py-32 px-4 bg-zinc-950">
-            <div className="max-w-4xl mx-auto">
-                <h2 className="text-white font-heading text-4xl mb-12 uppercase text-center tracking-widest text-cinema-silver">Director's Commentary</h2>
-
-                <div className="flex flex-col gap-4">
-                    {faqs.map((faq, i) => (
-                        <div key={i} className="border-b border-zinc-800">
-                            <button
-                                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                                className="w-full py-6 flex justify-between items-center text-left hover:text-cinema-gold transition-colors"
-                            >
-                                <span className="font-heading text-xl md:text-2xl uppercase text-white">{faq.q}</span>
-                                <span className="text-2xl text-cinema-gold">{openIndex === i ? "—" : "+"}</span>
-                            </button>
-                            <div
-                                className={`overflow-hidden transition-all duration-500 ease-in-out ${openIndex === i ? "max-h-48 opacity-100 mb-6" : "max-h-0 opacity-0"}`}
-                            >
-                                <p className="font-body text-gray-400 text-lg leading-relaxed">{faq.a}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+        <section className="py-24 md:py-32 lg:py-48 px-4 text-center bg-bg-secondary border-t border-border-light relative overflow-hidden">
+            <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
+                <span className="font-mono text-xs uppercase tracking-[0.3em] text-text-secondary mb-8 block">
+                    [06] The Next Chapter
+                </span>
+                <h2 className="font-heading text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter text-text-primary leading-[0.85] mb-12">
+                    Let's Build <br /> <span className="text-text-secondary">Together.</span>
+                </h2>
+                <Link
+                    href="/contact"
+                    className="group relative inline-flex items-center justify-center px-12 py-6 bg-white text-black font-mono text-sm uppercase tracking-widest font-bold overflow-hidden transition-transform duration-300 hover:scale-105"
+                >
+                    <span className="relative z-10">Open For Opportunities</span>
+                </Link>
             </div>
         </section>
     );
-}
+};
 
 // MAIN PAGE COMPONENT
 export default function AboutPage() {
     return (
-        <main className="bg-cinema-bg min-h-screen text-white selection:bg-cinema-gold selection:text-black">
-            {/* Back Navigation */}
-            <Link
-                href="/"
-                className="fixed top-6 left-6 z-50 group flex items-center gap-3 px-4 py-2 bg-black/50 backdrop-blur-md rounded-full border border-white/10 hover:bg-white hover:text-black transition-all duration-300"
-            >
-                <ArrowLeft size={16} />
-                <span className="font-mono text-xs uppercase tracking-widest">Back to Home</span>
-            </Link>
-
-            <IntroHero />
-            <Manifesto />
-            <TheArsenal />
-            <BoxOfficeStats />
-            <BehindTheScenes />
-            <DirectorsCommentary />
-
-            {/* FINALE CTA */}
-            <section className="py-20 text-center bg-zinc-900 border-t border-zinc-800">
-                <h2 className="font-heading text-3xl mb-8 uppercase text-gray-500">End of Scene</h2>
-                <Link
-                    href="/contact"
-                    className="inline-block px-12 py-6 bg-cinema-gold text-black font-heading text-2xl uppercase tracking-widest hover:bg-white hover:scale-105 transition-all duration-300 shadow-[0_0_50px_rgba(197,160,89,0.2)]"
-                >
-                    Start Your Project
-                </Link>
-            </section>
+        <main className="bg-bg-primary min-h-screen text-text-primary selection:bg-white selection:text-black font-body">
+            <HeroEntrance />
+            <CorePhilosophy />
+            <TechnicalArsenal />
+            <CareerJourney />
+            <ScaleAndImpact />
+            <BeyondIDE />
+            <NextChapterCTA />
         </main>
     );
 }

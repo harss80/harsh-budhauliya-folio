@@ -3,108 +3,88 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Mail, MapPin, Phone } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact() {
-    const container = useRef(null);
+    const footerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        // Parallax footer reveal effect
         const ctx = gsap.context(() => {
-            gsap.from(".credit-line", {
-                scrollTrigger: {
-                    trigger: container.current,
-                    start: "top 80%",
-                },
-                y: 30,
-                opacity: 0,
-                stagger: 0.15,
-                duration: 1,
-                ease: "power2.out",
-            });
-        }, container);
+            if (!footerRef.current) return;
+            
+            gsap.fromTo(".footer-content", 
+                { y: "-30%", opacity: 0 },
+                {
+                    y: "0%",
+                    opacity: 1,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: footerRef.current,
+                        start: "top bottom",
+                        end: "bottom bottom",
+                        scrub: true,
+                    }
+                }
+            );
+        }, footerRef);
         return () => ctx.revert();
     }, []);
 
     return (
-        <section
-            ref={container}
-            id="credits"
-            className="min-h-screen relative flex flex-col items-center justify-center py-24 text-center overflow-hidden bg-black"
+        <footer 
+            ref={footerRef}
+            id="contact"
+            className="relative w-full h-[80vh] lg:h-screen bg-text-primary text-bg-primary overflow-hidden"
+            style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
         >
-            <div className="absolute inset-0 cinema-grain" />
-
-            {/* Sparkles - Flat style */}
-            <div className="sparkle-credit absolute top-[10%] left-[15%] text-2xl text-cinema-gray opacity-30">✦</div>
-            <div className="sparkle-credit absolute bottom-[30%] left-[10%] text-xl text-cinema-gray opacity-30">✧</div>
-
-            <div className="z-10 w-full max-w-3xl px-6">
-                {/* Title */}
-                <h2 className="font-heading text-5xl sm:text-6xl md:text-8xl mb-16 credit-line text-white">
-                    <span className="text-white">
-                        THE END
-                    </span>
-                    <span className="block text-sm sm:text-xl text-cinema-gray tracking-[0.3em] sm:tracking-[0.5em] mt-4 uppercase font-body">
-                        (Or just the beginning)
-                    </span>
-                </h2>
-
-                <div className="space-y-12 font-heading tracking-widest text-lg md:text-xl">
-                    {/* Director */}
-                    <div className="credit-line">
-                        <p className="text-xs sm:text-sm text-cinema-silver mb-2 uppercase tracking-[0.3em] sm:tracking-[0.5em]">
-                            DIRECTED & PRODUCED BY
-                        </p>
-                        <p className="text-2xl sm:text-4xl text-cinema-gold font-bold">HARSH BUDHAULIYA</p>
+            <div className="footer-content fixed bottom-0 left-0 w-full h-[80vh] lg:h-screen flex flex-col justify-between p-6 md:p-12 lg:p-24 z-0">
+                
+                <div className="flex flex-col lg:flex-row justify-between items-start gap-12 mt-24">
+                    <div className="flex flex-col max-w-2xl">
+                        <span className="text-bg-primary font-bold tracking-widest text-sm uppercase mb-6 block opacity-50">
+                            [06] Contact
+                        </span>
+                        <h2 className="text-4xl md:text-5xl lg:text-7xl font-black uppercase tracking-tighter leading-[0.9] mb-8">
+                            Open to <br /> new <br /> opportunities.
+                        </h2>
+                        <a 
+                            href="mailto:harshbudhauliya921@gmail.com" 
+                            className="inline-flex w-fit text-xl md:text-3xl font-bold uppercase tracking-tight border-b-4 border-bg-primary pb-2 hover:opacity-50 transition-opacity"
+                        >
+                            harshbudhauliya921@gmail.com
+                        </a>
                     </div>
-
-                    {/* Roles */}
-                    <div className="credit-line">
-                        <p className="text-sm text-cinema-silver mb-2 uppercase tracking-[0.5em]">
-                            STARRING AS
-                        </p>
-                        <p className="text-2xl text-white">
-                            Full Stack Developer • Web Designer • Digital Marketer
-                        </p>
-                    </div>
-
-                    {/* Contact Info */}
-                    <div className="credit-line pt-8 space-y-4">
-                        <div className="w-24 h-[1px] bg-cinema-gray mx-auto mb-8" />
-
-                        <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-gray-400">
-                            <div className="flex items-center gap-2">
-                                <MapPin className="w-4 h-4 text-cinema-gold" />
-                                <span>India</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <Mail className="w-4 h-4 text-cinema-gold" />
-                                <span>harsh@example.com</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <Phone className="w-4 h-4 text-cinema-gold" />
-                                <span>+91 XXXXX XXXXX</span>
+                    
+                    <div className="flex flex-col gap-8">
+                        <div className="flex flex-col gap-2 mt-8">
+                            <span className="text-sm font-bold tracking-widest uppercase opacity-50">Direct Line</span>
+                            <span className="text-xl font-medium uppercase">+91 8929989312</span>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <span className="text-sm font-bold tracking-widest uppercase opacity-50">Location</span>
+                            <span className="text-xl font-medium uppercase max-w-xs leading-tight">WZ-73 Om Vihar Face 2, Uttam Nagar, New Delhi 110059</span>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <span className="text-sm font-bold tracking-widest uppercase opacity-50">Socials</span>
+                            <div className="flex gap-4">
+                                <a href="https://www.linkedin.com/in/harsh-budhauliya/" target="_blank" rel="noopener noreferrer" className="text-xl font-bold uppercase hover:opacity-50 transition-opacity">LN</a>
+                                <a href="https://github.com/harss80" target="_blank" rel="noopener noreferrer" className="text-xl font-bold uppercase hover:opacity-50 transition-opacity">GH</a>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    {/* CTA */}
-                    <div className="credit-line pt-8">
-                        <p className="text-gray-600 mb-6 uppercase text-sm tracking-[0.3em]">
-                            Ready to create your blockbuster?
-                        </p>
-                        <a href="/contact" className="inline-block px-12 py-5 border border-cinema-gold text-cinema-gold hover:bg-cinema-gold hover:text-black font-bold tracking-[0.2em] uppercase transition-all duration-300">
-                            ★ HIRE ME ★
-                        </a>
-                    </div>
+                <div className="flex flex-col md:flex-row justify-between items-end border-t-2 border-bg-primary/20 pt-8 pb-4">
+                    <h1 className="text-[10vw] md:text-[8vw] font-black uppercase tracking-tighter leading-none opacity-10">
+                        Budhauliya
+                    </h1>
+                    <span className="text-sm font-bold uppercase tracking-widest opacity-50 pb-2">
+                        © {new Date().getFullYear()} All rights reserved.
+                    </span>
                 </div>
             </div>
-
-            {/* Footer */}
-            <div className="absolute bottom-8 text-xs text-gray-700 uppercase tracking-[0.5em] credit-line">
-                © 2025 HARSH BUDHAULIYA • All Rights Reserved
-            </div>
-        </section>
+        </footer>
     );
 }

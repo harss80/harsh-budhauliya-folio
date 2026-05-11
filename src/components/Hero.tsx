@@ -2,124 +2,145 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import Link from "next/link";
-import { ArrowDown } from "lucide-react";
-import { Sticker, TechBadge } from "./SocialStickers";
-import { Code, Cpu } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
-    const titleRef = useRef<HTMLHeadingElement>(null);
+    const photoRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            // Parallax Effect on Mouse Move
-            const handleMouseMove = (e: MouseEvent) => {
-                const { clientX, clientY } = e;
-                const x = (clientX / window.innerWidth - 0.5) * 20;
-                const y = (clientY / window.innerHeight - 0.5) * 20;
-
-                gsap.to(".parallax-layer", {
-                    x: x,
-                    y: y,
-                    duration: 1,
-                    ease: "power2.out",
-                });
-
-                gsap.to(".parallax-text", {
-                    x: x * 0.5,
-                    y: y * 0.5,
-                    duration: 1,
-                    ease: "power2.out",
-                });
-            };
-
-            window.addEventListener("mousemove", handleMouseMove);
-
-            // Entrance Animation
             const tl = gsap.timeline();
-            tl.from(".hero-element", {
-                opacity: 0,
-                y: 50,
-                duration: 1.5,
-                stagger: 0.2,
-                ease: "power3.out",
-                delay: 0.5,
-            });
+            
+            // Text Mask Reveal (Advanced Typography Animation)
+            tl.fromTo(".hero-title-word", 
+                { y: "120%", rotateZ: 5 },
+                { y: "0%", rotateZ: 0, duration: 1.2, stagger: 0.1, ease: "power4.out" }
+            );
 
-            return () => {
-                window.removeEventListener("mousemove", handleMouseMove);
-            };
+            tl.fromTo(".hero-desc",
+                { opacity: 0, x: -20 },
+                { opacity: 1, x: 0, duration: 1, ease: "power3.out" },
+                "-=0.6"
+            );
+
+            tl.fromTo(".hero-cta",
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: "power3.out" },
+                "-=0.8"
+            );
+
+            // Parallax photo entrance
+            tl.fromTo(".hero-visual-wrapper",
+                { clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0% 100%)", scale: 1.1 },
+                { clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)", scale: 1, duration: 1.5, ease: "power4.inOut" },
+                "-=1.2"
+            );
         }, containerRef);
 
         return () => ctx.revert();
     }, []);
 
+    // Subtle parallax on photo container based on mouse
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!photoRef.current) return;
+        const { clientX, clientY } = e;
+        const xPos = (clientX / window.innerWidth - 0.5) * 30;
+        const yPos = (clientY / window.innerHeight - 0.5) * 30;
+
+        gsap.to(photoRef.current, {
+            x: xPos,
+            y: yPos,
+            duration: 1,
+            ease: "power2.out"
+        });
+    };
+
+    const handleMouseLeave = () => {
+        if (!photoRef.current) return;
+        gsap.to(photoRef.current, {
+            x: 0,
+            y: 0,
+            duration: 1,
+            ease: "power3.out"
+        });
+    };
+
     return (
         <section
             ref={containerRef}
-            className="relative w-full min-h-screen py-20 flex flex-col justify-center items-center bg-cinema-bg text-white overflow-hidden"
+            className="relative w-full min-h-screen flex flex-col pt-32 lg:pt-40 pb-24 px-6 md:px-12 lg:px-24 max-w-[1440px] mx-auto z-10 overflow-hidden"
         >
-            {/* Cinematic Background */}
-            <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 cinema-grain" />
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                
+                {/* Left Content (Massive Typography) */}
+                <div className="lg:col-span-7 flex flex-col items-start z-10">
+                    
+                    <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter text-text-primary leading-[0.9] mb-8 uppercase flex flex-col">
+                        <div className="text-mask-container pb-2">
+                            <div className="hero-title-word">Crafting</div>
+                        </div>
+                        <div className="text-mask-container pb-2">
+                            <div className="hero-title-word flex items-center gap-2 sm:gap-4">
+                                Scalable <span className="hidden sm:inline-block w-12 sm:w-16 md:w-32 h-2 sm:h-3 bg-text-primary mb-2 sm:mb-4"></span>
+                            </div>
+                        </div>
+                        <div className="text-mask-container pb-2 text-text-secondary">
+                            <div className="hero-title-word">Systems.</div>
+                        </div>
+                    </h1>
 
-                {/* Gradient Lighting - Subtle Gold/Silver */}
-                <div className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] bg-cinema-gold/5 rounded-full blur-[120px] mix-blend-screen parallax-layer" />
-                <div className="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] bg-cinema-silver/5 rounded-full blur-[100px] mix-blend-screen parallax-layer" />
-            </div>
-
-            {/* Sticker Decor */}
-            <div className="absolute top-[15%] right-[10%] hidden lg:block hero-element opacity-80">
-                <Sticker text="AVAILABLE FOR HIRE" className="rotate-12 bg-white text-black text-sm border border-zinc-500" />
-            </div>
-
-            <div className="absolute bottom-[20%] left-[5%] hidden lg:block hero-element opacity-80 z-20">
-                <Sticker text="FULL STACK DEV" className="rotate-[-8deg] bg-cinema-gold text-black text-sm border-black" />
-            </div>
-
-            {/* Main Content */}
-            <div className="relative z-10 text-center px-4 max-w-7xl mx-auto flex flex-col justify-center h-full">
-                <div className="hero-element mb-6 md:mb-8 flex justify-center gap-4">
-                    <TechBadge icon={Code} text="WEB DEVELOPER" />
-                    <TechBadge icon={Cpu} text="CREATIVE" />
-                </div>
-
-                <h1
-                    ref={titleRef}
-                    className="hero-element font-heading font-bold uppercase leading-[0.85] tracking-tight mb-6 md:mb-10 parallax-text relative"
-                >
-                    <span className="block text-white drop-shadow-2xl" style={{ fontSize: "clamp(3rem, 15vw, 10rem)" }}>
-                        HARSH
-                    </span>
-                    <span className="block text-cinema-gold drop-shadow-lg" style={{ fontSize: "clamp(2.5rem, 13vw, 10rem)" }}>
-                        BUDHAULIYA
-                    </span>
-                </h1>
-
-                <div className="hero-element relative max-w-3xl mx-auto mb-10 md:mb-12 px-4">
-                    <div className="absolute -left-4 md:-left-12 top-0 w-[1px] h-full bg-gradient-to-b from-transparent via-cinema-gold/30 to-transparent hidden md:block" />
-                    <div className="absolute -right-4 md:-right-12 top-0 w-[1px] h-full bg-gradient-to-b from-transparent via-cinema-gold/30 to-transparent hidden md:block" />
-
-                    <p className="font-body text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 tracking-wide max-w-2xl mx-auto leading-relaxed">
-                        Combining cinematic storytelling with high-performance engineering to create digital experiences that wow.
+                    <p className="hero-desc text-lg sm:text-xl md:text-2xl text-text-secondary font-light max-w-xl leading-relaxed mb-10 md:mb-12 border-l-2 border-border-light pl-4 md:pl-6">
+                        I am Harsh Budhauliya. A software engineer and UI/UX designer focused on structural perfection, advanced motion, and premium aesthetics.
                     </p>
+
+                    <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+                        <a 
+                            href="#projects" 
+                            className="hero-cta group relative flex items-center gap-3 px-6 sm:px-8 py-4 sm:py-5 bg-text-primary text-bg-primary font-bold overflow-hidden transition-all"
+                        >
+                            <span className="relative z-10 flex items-center gap-3 text-sm sm:text-base">
+                                View My Work
+                                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                            </span>
+                        </a>
+                        <a 
+                            href="#contact"
+                            className="hero-cta px-6 sm:px-8 py-4 sm:py-5 font-bold text-text-primary border border-border-light hover:bg-white hover:text-black transition-colors duration-300 text-sm sm:text-base"
+                        >
+                            Let's Talk
+                        </a>
+                    </div>
                 </div>
 
-                {/* CTA Buttons - Classic Cinema Style (Gold/White) */}
-                <div className="hero-element flex flex-wrap justify-center gap-6">
-                    <Link
-                        href="/projects"
-                        className="group relative px-8 py-4 bg-cinema-gold text-black font-heading tracking-widest uppercase hover:bg-white transition-colors duration-300 shadow-[0_4px_10px_rgba(0,0,0,0.5)]"
+                {/* Right Visuals (Structural Photo Parallax) */}
+                <div className="lg:col-span-5 relative w-full h-[40vh] md:h-[60vh] lg:h-[80vh] flex items-center justify-center lg:justify-end mt-8 lg:mt-0">
+                    <div 
+                        className="relative w-full max-w-[350px] md:max-w-[450px] h-full"
+                        onMouseMove={handleMouseMove}
+                        onMouseLeave={handleMouseLeave}
                     >
-                        View Projects
-                    </Link>
-                    <Link
-                        href="/contact"
-                        className="group relative px-8 py-4 bg-transparent border border-white text-white font-heading tracking-widest uppercase hover:border-cinema-gold hover:text-cinema-gold transition-all duration-300"
-                    >
-                        Contact Me
-                    </Link>
+                        {/* Structural offset backplate */}
+                        <div className="absolute top-6 sm:top-10 -left-6 sm:-left-10 w-full h-full border border-border-light pointer-events-none z-0 hidden md:block"></div>
+                        
+                        {/* The Photo Container with clipping entrance */}
+                        <div className="hero-visual-wrapper absolute inset-0 z-10 bg-bg-secondary overflow-hidden">
+                            <div 
+                                ref={photoRef}
+                                className="relative w-[110%] h-[110%] -left-[5%] -top-[5%]"
+                            >
+                                <Image
+                                    src="/profilephoto.webp"
+                                    alt="Harsh Budhauliya"
+                                    fill
+                                    className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                                    priority
+                                    quality={100}
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
